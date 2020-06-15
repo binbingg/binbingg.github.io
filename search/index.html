@@ -1,23 +1,25 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
-	<meta name="generator" content="Hugo 0.72.0" />
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>言白话的博客 | 这里是技术小白的乐园</title>
-    <meta property="og:title" content="言白话的博客 | 这里是技术小白的乐园">
-    <meta property="og:type" content="website">
+    <title>搜索 | 言白话的博客</title>
+    <meta property="og:title" content="搜索 - 言白话的博客">
+    <meta property="og:type" content="article">
+        
+        
     <meta name="Keywords" content="言白话,java,android,博客,项目管理,python,软件架构,公众号,小程序">
-    <meta name="description" content="专注于IT互联网，包括但不限于Go语言(golang)、Java、Android、Python、项目管理、抖音分析、软件架构等">
-    <meta property="og:url" content="https://binbingg.github.io/">
+    <meta name="description" content="搜索页面">
+        
+    <meta name="author" content="言白话">
+    <meta property="og:url" content="https://binbingg.github.io/search/">
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 
     <link rel="stylesheet" href='/css/normalize.css'>
     <link rel="stylesheet" href='/css/style.css'>
-    <link rel="alternate" type="application/rss+xml+xml" href="https://binbingg.github.io/index.xml" title="言白话的博客" />
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
     
@@ -34,17 +36,15 @@
         <div class="col-group">
             <div class="site-name ">
                 
-                    <h1>
-                        <a id="logo" href="https://binbingg.github.io/">
-                            言白话的博客
-                        </a>
-                    </h1>
+                    <a id="logo" href="https://binbingg.github.io/">
+                        言白话的博客
+                    </a>
                 
                 <p class="description">这里是技术小白的乐园</p>
             </div>
             <div>
                 <nav id="nav-menu" class="clearfix">
-                    <a class="current" href="https://binbingg.github.io/">首页</a>
+                    <a class="" href="https://binbingg.github.io/">首页</a>
                     
                     <a  href="https://binbingg.github.io/books/" title="资料">资料</a>
                     
@@ -65,37 +65,71 @@
                 <div class="col-8" id="main">
                     
 <div class="res-cons">
-    
+    <h3 class="archive-title">
+        搜索
+        <span class="keyword">哈哈</span>
+        的结果
+    </h3>
+
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://binbingg.github.io/posts/my-first-post/" title="如何配置Maven阿里云镜像">如何配置Maven阿里云镜像</a>
+                <a href="链接">标题</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
-            2020年6月12日
+            2019年12月01日
         </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category"><a href='https://binbingg.github.io/categories/Maven'>Maven</a></span>
-            
-        </div>
-        
         <div class="post-content">
-            1. 为什么要配置Maven阿里云镜像 安装Maven后默认是从国外Maven中央仓库下载内容，而下载速度简直可以用龟速来形容，不仅慢而且还经常出……
+            概要……
+            <p class="readmore"><a href="链接">阅读全文</a></p>
         </div>
-        <p class="readmore"><a href="https://binbingg.github.io/posts/my-first-post/">阅读全文</a></p>
     </article>
-    
-    
-
-
-
-
 
 </div>
+
+<script type="text/javascript">
+
+    var getUrlParameter = function getUrlParameter(sParam) {
+        var sPageURL = window.location.search.substring(1),
+            sURLVariables = sPageURL.split('&'),
+            sParameterName,
+            i;
+
+        for (i = 0; i < sURLVariables.length; i++) {
+            sParameterName = sURLVariables[i].split('=');
+
+            if (sParameterName[0] === sParam) {
+                return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+            }
+        }
+    };
+
+    $(document).ready(function () {
+        var q = getUrlParameter("q");
+        $("span.keyword").text(q);
+        $("article.post").remove();
+        $.ajax({
+            url: 'https:\/\/binbingg.github.io\/index.xml',
+            dataType: "xml",
+            success: function (data) {
+                $(data).find("item").each(function () {
+                    var item = $(this);
+                    var title = item.find("title").text();
+                    if (title.toLowerCase().indexOf(q.toLowerCase()) >= 0) {
+                        var url = item.find("link").text();
+                        var searchItem = `<article class="post"><header><h1 class="post-title"><a href="` + url + `">` + title + `</a></h1></header>`;
+                        var pubDate = new Date(item.find("pubDate").text())
+                        searchItem += `<date class="post-meta meta-date">` + pubDate.getFullYear() + `年` + (pubDate.getMonth() + 1) + `月` + pubDate.getDate() + `日</date>`;
+                        searchItem += `<div class="post-content">` + item.find("description").text() + `……<p class="readmore"><a href="` + url + `">阅读全文</a></p></div></article>`;
+
+                        $("div.res-cons").append(searchItem);
+                    }
+                });
+            }
+        });
+    });
+</script>
 
                 </div>
 
@@ -176,6 +210,17 @@
     </div>
 </footer>
 
+
+    
+    <script type="text/javascript">
+        window.MathJax = {
+            tex2jax: {
+                inlineMath: [['$', '$']],
+                processEscapes: true
+                }
+            };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
 
 
 <a id="rocket" href="#top"></a>
